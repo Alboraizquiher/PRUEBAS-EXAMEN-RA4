@@ -15,14 +15,16 @@ public class DatosAlumno {
     private String Name;
     private String Surname;
     private Integer IdUser;
-    private Integer NumberBooks;
+    private DatoLibro[] libros;
 
-    public DatosAlumno(String Name, String Surname, Integer IdUser, Integer NumberBooks) {
+    public DatosAlumno(String Name, String Surname, Integer IdUser) {
         this.Name = Name;
         this.Surname = Surname;
         this.IdUser = IdUser;
-        this.NumberBooks = NumberBooks;
+        
     }
+    
+    
 
     public String getName() {
         return Name;
@@ -48,13 +50,15 @@ public class DatosAlumno {
         this.IdUser = IdUser;
     }
 
-    public Integer getNumberBooks() {
-        return NumberBooks;
+
+
+    public void setLibros(DatoLibro libro,int pos) {
+        this.libros [pos]= libro;
+        
     }
 
-    public void setNumberBooks(Integer NumberBooks) {
-        this.NumberBooks = NumberBooks;
-    }
+   
+    
     
     
     

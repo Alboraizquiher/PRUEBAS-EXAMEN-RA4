@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.HashMap;
-import java.util.Map;
 import model.DatoLibro;
 import model.DatosAlumno;
 
@@ -16,119 +11,154 @@ import model.DatosAlumno;
  */
 public class Biblioteca {
 
-    /*Ejemplo 1: Gestión de Biblioteca
+    private ArrayList<DatoLibro> libro;
+    private ArrayList<DatosAlumno> alumnos;
 
-Enunciado: Crea un programa para gestionar los libros de una biblioteca. El programa será utilizado por los bibliotecarios y debe permitir:
+    public Biblioteca() {
+        libro = new ArrayList<>();
+        alumnos = new ArrayList<>();
+    }
 
-Datos del libro:
-    
-Título, Autor, ISBN, Estado (Prestado o Disponible).
-    
-Datos del usuario:
-    
-Nombre, Apellido, ID usuario, Libros prestados (máximo 3).
-    
-Características principales:
-    
-Crea clases para representar los elementos identificables. IT´S ALMOST DONE 
-    
-Incluye constructores para inicializar las clases. IT´S ALMOST DONE
-    
-Añade getters y setters para al menos una clase. IT´S ALMOST DONE
-    
-Implementa un menú interactivo con las siguientes opciones:
-    
-Registrar un nuevo libro.
-Registrar un usuario.
-Prestar un libro (actualiza el estado del libro y registra el usuario que lo prestó).
-Mostrar los datos de un libro por ISBN.
-Salir del programa.
-    
-     */
-    
-    
-     private DatoLibro[] inventoryBook;
-      private DatosAlumno[] inventoryAlumno;
-     
-     
     public static void main(String[] args) {
 
-        //MENU INTERACTIVO //
+        Biblioteca biblioteca = new Biblioteca();
         Scanner sc = new Scanner(System.in);
-        int menu = sc.nextInt();
 
+        int menu;
         do {
-
             System.out.println(" << THE MENU IS >> ");
             System.out.println(" << 1 -> REGISTER A NEW BOOK >> ");
             System.out.println(" << 2 -> REGISTER A NEW USER >> ");
             System.out.println(" << 3 -> LEND A BOOK >> ");
             System.out.println(" << 4 -> SHOW ALL THE DATA ABOUT A BOOK FOR ISBN >> ");
             System.out.println(" << 5 -> EXIT THE PROGRAM >> ");
-            
+            menu = sc.nextInt();
+            sc.nextLine(); // Consume newline
+
             switch (menu) {
                 case 1:
-                    registerBook();
+                    biblioteca.registerBook();
                     break;
                 case 2:
-                    registerUser();
+                    biblioteca.registerUser();
                     break;
                 case 3:
-                    lendBook();
+                    biblioteca.lendBook();
                     break;
                 case 4:
-                    showDataBook();
+                    biblioteca.showDataBook();
                     break;
                 case 5:
-                    System.out.println(" GOOD BYE ");
+                    System.out.println("GOOD BYE");
                     break;
-                
-                    
-                    
+                default:
+                    System.out.println("Invalid option. Try again.");
             }
 
         } while (menu != 5);
-        
-        
+    }
+
+    public void registerBook() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("PLEASE ENTER THE BOOK THAT YOU WANT TO REGISTER");
+        System.out.println("Introduce the title of the book:");
+        String title = sc.nextLine();
+
+        System.out.println("Introduce the author of the book:");
+        String author = sc.nextLine();
+
+        System.out.println("Introduce the ISBN of the book:");
+        long isbn = sc.nextLong();
+
+        DatoLibro newBook = new DatoLibro(title, author, isbn);
+        libro.add(newBook);
+
+        System.out.println("THE BOOK HAS BEEN REGISTERED SUCCESSFULLY.");
+    }
+
+    public void registerUser() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("PLEASE ENTER THE USER THAT YOU WANT TO REGISTER");
+        System.out.println("Introduce the name of the user:");
+        String name = sc.nextLine();
+
+        System.out.println("Introduce the surname of the user:");
+        String surname = sc.nextLine();
+
+        System.out.println("Introduce the ID of the user:");
+        int idUser = sc.nextInt();
+
+        DatosAlumno newUser = new DatosAlumno(name, surname, idUser);
+        alumnos.add(newUser);
+
+        System.out.println("THE USER HAS BEEN REGISTERED SUCCESSFULLY.");
+    }
+
+    public void lendBook() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("PLEASE ENTER THE USER ID WHO WANTS TO LEND A BOOK:");
+        int userId = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        DatosAlumno user = null;
+        for (DatosAlumno alumno : alumnos) {
+            if (alumno.getIdUser() == userId) {
+                user = alumno;
+                break;
+            }
+        }
+
+        if (user == null) {
+            System.out.println("USER NOT FOUND.");
+            return;
+        }
+
+        System.out.println("PLEASE ENTER THE ISBN OF THE BOOK TO BE LENT:");
+        long isbn = sc.nextLong();
+
+        DatoLibro bookToLend = null;
+        for (DatoLibro book : libro) {
+            if (book.getPoD() == isbn) {
+                bookToLend = book;
+                break;
+            }
+        }
+
+        if (bookToLend == null) {
+            System.out.println("BOOK NOT FOUND.");
+            return;
+        }
+
+        System.out.println("ENTER THE POSITION (0-2) TO ASSIGN THE BOOK:");
+        int position = sc.nextInt();
+
+        if (position < 0 || position > 2) {
+            System.out.println("THE POSITION IS OUT OF BOUNDS.");
+        }
+
+        System.out.println("SEARCH AND RESPONSE BRANCH.");
 
     }
-    
-    public static void registerBook(){
-    
-        System.out.println(" PLEASE ENTER THE BOOK THAT YOU WANT TO REGISTRER");
-        Scanner sc = new Scanner (System.in);
-        System.out.println(" Introduce the title of the book");
-        String Title = sc.nextLine();
-        System.out.println(" Introduce the autor of the book");
-        String Autor = sc.nextLine();
-        System.out.println(" Introduce the ISBN of the book");
-        int Isbn = sc.nextInt();
-        
-        
-        
-       DatoLibro book1 = new DatoLibro(Title,Autor,Isbn);
-        
-       
-        
-       
-        
-    
-    };
-    
-    public static void registerUser(){
-    
-    };
-    
-    public static void lendBook(){
-    
-    };
-    
-    public static void showDataBook(){
-    
-    };
-    
-    
-    
-    
 
+    public void showDataBook() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("PLEASE ENTER THE ISBN OF THE BOOK:");
+        long isbn = sc.nextLong();
+
+        for (DatoLibro book : libro) {
+            if (book.getPoD() == isbn) {
+                System.out.println("Book Details:");
+                System.out.println("Title: " + book.getTitle());
+                System.out.println("Author: " + book.getAutor());
+                System.out.println("ISBN: " + book.getPoD());
+                return;
+            }
+        }
+
+        System.out.println("BOOK NOT FOUND.");
+    }
 }

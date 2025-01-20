@@ -15,13 +15,15 @@ public class DatoLibro {
     
     private String Title;
     private String Autor;
-    private Integer PoD;
+    private long PoD;
 
-    public DatoLibro(String Title, String Autor, Integer PoD) {
+    public DatoLibro(String Title, String Autor, long PoD) {
         this.Title = Title;
         this.Autor = Autor;
         this.PoD = PoD;
     }
+
+  
 
     public String getTitle() {
         return Title;
@@ -39,14 +41,17 @@ public class DatoLibro {
         this.Autor = Autor;
     }
 
-    public Integer getPoD() {
+    public long getPoD() {
         return PoD;
     }
 
-    public void setPoD(Integer PoD) {
+    public void setPoD(long PoD) {
         this.PoD = PoD;
     }
 
+   
+
+    
   
 
     
